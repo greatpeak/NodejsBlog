@@ -1,38 +1,34 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const articlesRouter = require("./routes/articles");
+const Article = require("./models/article");
+const methodOverride = require("method-override");
+const password = "ZkQrySM2kUf011B3";
 
 const app = express();
 
-mongoose.connect("mongodb://localhost/blog", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(
+  `mongodb+srv://abatandivine:${password}@blog.9p9yv.mongodb.net/?retryWrites=true&w=majority&appName=Blog`,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 
 app.set("view engine", "ejs");
-
 app.use(
   express.urlencoded({
     extended: false,
   })
 );
+app.use(methodOverride("_method"));
+
+
+app.use(express.urlencoded({ extended: false }));
 app.use("/articles", articlesRouter);
 
-app.get("/", (req, res) => {
-  const articles = [
-    {
-      title: "Article 1",
-      createdAt: new Date(),
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed bibendum, mi id tempus lobortis, justo quam faucibus sapien, at dictum urna sapien non velit.",
-    },
-    {
-      title: "Article 2",
-      createdAt: new Date(),
-      description:
-        "Vestibulum tincidunt, orci id vulputate bibendum, metus ipsum tincidunt purus, vel malesuada metus eros id neque.",
-    },
-  ];
+app.get("/", async (req, res) => {
+  const articles = await Article.find({}).sort({ createdAt: "desc" });
   res.render("articles/index", { articles: articles });
 });
 
