@@ -9,13 +9,13 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <title>New Article</title>
+    <title>Edit Article</title>
   </head>
   <body>
     <div class="container mt-4">
       <h1 class="mb-4">Edit Article</h1>
 
-      <form action="/articles/<%= article.id %>?_method=PUT" method="PUT">
+      <form action="/articles/<%= article.id %>?_method=PUT" method="POST">
         <%- include('./_form_fields.ejs') %>
       </form>
     </div>

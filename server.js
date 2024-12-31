@@ -7,13 +7,16 @@ const password = "ZkQrySM2kUf011B3";
 
 const app = express();
 
-mongoose.connect(
-  `mongodb+srv://abatandivine:${password}@blog.9p9yv.mongodb.net/?retryWrites=true&w=majority&appName=Blog`,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+mongoose
+  .connect(
+    `mongodb+srv://abatandivine:${password}@blog.9p9yv.mongodb.net/?retryWrites=true&w=majority&appName=Blog`,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error("Database Connection Error:", err));
 
 app.set("view engine", "ejs");
 app.use(
